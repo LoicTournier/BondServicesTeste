@@ -1,0 +1,11 @@
+{
+  "/v2/*": {
+    "target": "http://www.mocky.io/",
+    "changeOrigin": true,
+    "secure": false,
+    "pathRewrite": {
+      "^/v2/": "/v2/"
+    },
+    "logLevel": "debug"
+  }
+}

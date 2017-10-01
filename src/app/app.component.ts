@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { CountryService } from '../app/app.service';
-import { Http } from '@angular/http';
+import { CountryService } from './app.service';
 export interface Shareholder {
   id?: number;
   process_id?: number;
@@ -29,6 +27,7 @@ export interface Country {
 })
 export class AppComponent implements OnInit {
 
+  public ShareholderContainer: Shareholder;
   country: Country[] = [];
   shareholder: Shareholder[] = [];
   typeOfShareHolder: TypeOfShareholder[] = [];
@@ -40,7 +39,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.country.length + 'Hello Init Country')
+    console.log(this.country.length + 'Hello Init Country');
     if (this.shareholder.length < 1) {
       this.shareholder.push({ id: 1, name: 'Anibal', percentage: null, process_id: 7, country_id: 1, shareholder_type_id: 1 });
     }
@@ -75,6 +74,7 @@ export class AppComponent implements OnInit {
   getShareholder() {
     this.countryService.getShareholder()
       .subscribe(shareholder => {
+        console.log('Shareholder API Response: ', shareholder);
         this.shareholder = shareholder
       },
       error => {
