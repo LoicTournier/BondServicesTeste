@@ -9,6 +9,25 @@ export interface Shareholder {
   country_id?: number;
 }
 
+// Created a model so i can't instanciate it via this.ShareholderContainer = new ShareholderDummy();
+export class ShareholderDummy {
+  id?: number;
+  process_id?: number;
+  name?: string;
+  percentage?: number;
+  shareholder_type_id?: number;
+  country_id?: number;
+
+  constructor(id?: number, process_id?: number, name?: string, percentage?: number, shareholder_type_id?: number, country_id?: number) {
+    this.id = id;
+    this.process_id = process_id;
+    this.name = name;
+    this.percentage = percentage;
+    this.shareholder_type_id = shareholder_type_id;
+    this.country_id = country_id;
+  }
+}
+
 export interface TypeOfShareholder {
   value: number;
   text: string;
@@ -27,7 +46,7 @@ export interface Country {
 })
 export class AppComponent implements OnInit {
 
-  public ShareholderContainer: Shareholder;
+  public ShareholderContainer: ShareholderDummy = new ShareholderDummy();
   country: Country[] = [];
   shareholder: Shareholder[] = [];
   typeOfShareHolder: TypeOfShareholder[] = [];
@@ -43,6 +62,14 @@ export class AppComponent implements OnInit {
     if (this.shareholder.length < 1) {
       this.shareholder.push({ id: 1, name: 'Anibal', percentage: null, process_id: 7, country_id: 1, shareholder_type_id: 1 });
     }
+  }
+
+  onSubmit(form) {
+    console.log('Current Shareholder form: ', form.form.value);
+    // Should be replaced by a POST method, just wanted to demo it.
+    this.shareholder.push(form.form.value);
+    // Reset the container dummy to an empty state, as we may not want to push multiple of the same data by mistake.
+    this.ShareholderContainer = new ShareholderDummy();
   }
 
   getCountry() {

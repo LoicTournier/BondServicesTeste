@@ -2,34 +2,74 @@
   <p>
     Hello joaolbaptista
   </p>
-  <div *ngIf="shareholder">
+  <div *ngIf="shareholder.length > 0">
     <div *ngFor="let sh of shareholder">
+      <br>
       <div class="row">
         <div class="col-md-6 col-lg-6 col-xl-6">
-          <input class="form-control" type="text" [(ngModel)]="sh.name" placeholder="Nome completo">
+          <input class="form-control" type="text" name="name" [value]="sh.name" placeholder="Nome completo">
         </div>
         <div class="col-md-6 col-lg-6 col-xl-6">
-          <input class="form-control" type="text" [(ngModel)]="sh.percentage" placeholder="Percentagem Detida">
+          <input class="form-control" type="text" name="percentage" [value]="sh.percentage"
+                 placeholder="Percentagem Detida">
         </div>
       </div>
-    </div>
-    <div class="row" *ngIf="typeOfShareHolder">
-      <div class="col-md-6 col-lg-6 col-xl-6">
-        <select class="form-control" type="text">
-          <option *ngFor="let type of typeOfShareHolder" [value]="type.text">
-            {{type.text}}
-          </option>
-        </select>
-        <label class="label-input" for="tipo">Tipo de acicionista</label>
-      </div>
-      <div class="col-md-6 col-lg-6 col-xl-6">
-        <select class="form-control">
-          <option *ngFor="let countryName of country">
-            {{countryName.text}}
-          </option>
-        </select>
-        <label class="label-input">Nacionalidade</label>
+      <div class="row" *ngIf="typeOfShareHolder">
+        <div class="col-md-6 col-lg-6 col-xl-6">
+          <select class="form-control" type="text">
+            <option  *ngFor="let type of typeOfShareHolder" [selected]="type.value == sh.shareholder_type_id">
+              {{sh.shareholder_type_id}}
+            </option>
+          </select>
+          <label class="label-input" for="tipo">Tipo de acicionista</label>
+        </div>
+        <div class="col-md-6 col-lg-6 col-xl-6">
+          <select class="form-control">
+            <option *ngFor="let countryName of country" [selected]="countryName.value == sh.country_id">
+              {{countryName.text}}
+            </option>
+          </select>
+          <label class="label-input">Nacionalidade</label>
+        </div>
       </div>
     </div>
   </div>
+
+  <!--This template is displayed only if we have no shareholder, as it make us able to create new share holders-->
+  <form (submit)="onSubmit(formShareholderEmpty)" #formShareholderEmpty="ngForm">
+    <div>
+      <p>
+        Add new shareholders:
+      </p>
+      <div class="row">
+        <div class="col-md-6 col-lg-6 col-xl-6">
+          <input class="form-control" type="text" name="name" #name="ngModel" [ngModel]="ShareholderContainer.name"
+                 placeholder="Nome completo">
+        </div>
+        <div class="col-md-6 col-lg-6 col-xl-6">
+          <input class="form-control" type="text" name="percentage" #percentage="ngModel" [ngModel]="ShareholderContainer.percentage"
+                 placeholder="Percentagem Detida">
+        </div>
+      </div>
+      <div class="row" *ngIf="typeOfShareHolder">
+        <div class="col-md-6 col-lg-6 col-xl-6">
+          <select class="form-control" type="text" name="shareholder_type_id" #shareholder_type_id="ngModel" [ngModel]="ShareholderContainer.shareholder_type_id">
+            <option *ngFor="let type of typeOfShareHolder" [value]="type.value">
+              {{type.text}}
+            </option>
+          </select>
+          <label class="label-input" for="tipo">Tipo de acicionista</label>
+        </div>
+        <div class="col-md-6 col-lg-6 col-xl-6">
+          <select class="form-control" name="country_id" #country_id="ngModel" [ngModel]="ShareholderContainer.country_id">
+            <option *ngFor="let countryName of country" [value]="countryName.value">
+              {{countryName.text}}
+            </option>
+          </select>
+          <label class="label-input">Nacionalidade</label>
+        </div>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-success">Submit</button>
+  </form>
 </div>
