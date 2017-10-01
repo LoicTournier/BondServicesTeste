@@ -1,0 +1,30 @@
+<div class="container">
+  <div *ngFor="let sh of shareholder">
+    <div class="row">
+      <div class="col-md-6 col-lg-6 col-xl-6">
+        <input class="form-control" type="text" (ngModel)="sh.name" placeholder="Nome completo">
+      </div>
+      <div class="col-md-6 col-lg-6 col-xl-6">
+        <input class="form-control" type="text" (ngModel)="sh.percentage" placeholder="Percentagem Detida">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-lg-6 col-xl-6">
+        <select class="form-control" type="text" (ngModel)="a.shareholder_type_id">
+            <option *ngFor="let type of typeOfShareHolder" [value]="type.text">
+              {{type.text}}
+            </option>
+          </select>
+        <label class="label-input" for="tipo">Tipo de acicionista</label>
+      </div>
+      <div class="col-md-6 col-lg-6 col-xl-6">
+        <select class="form-control" (ngModel)="a.country_id">
+              <option *ngFor="let c of country">
+              {{c.text}}
+              </option>
+            </select>
+        <label class="label-input">Nacionalidade</label>
+      </div>
+    </div>
+  </div>
+</div>
